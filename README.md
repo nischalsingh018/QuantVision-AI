@@ -1,4 +1,5 @@
 # 📈 QuantVision AI
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://quantvision-bayesian-ns.streamlit.app/)
 ## Bayesian Regime Detection Engine for Indian Equity Markets
 
 QuantVision AI is an AI-powered financial analytics platform that detects market regimes using probabilistic machine learning and Bayesian inference techniques. The application combines multiple AI models to estimate market uncertainty, generate explainable investment recommendations, simulate portfolio performance, and visualize insights through an interactive Streamlit dashboard.
@@ -248,8 +249,6 @@ Run the application
 # 🌐 Live Demo
 [Launch QuantVision AI](https://quantvision-bayesian-ns.streamlit.app/)
 
-
-Coming Soon
  
 ---
 
