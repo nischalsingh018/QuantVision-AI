@@ -246,10 +246,11 @@ Run the application
 ---
 
 # 🌐 Live Demo
+[Launch QuantVision AI](https://quantvision-bayesian-ns.streamlit.app/)
+
 
 Coming Soon
- [Launch QuantVision AI](https://quantvision-bayesian-ns.streamlit.app/)
-
+ 
 ---
 
 # 💡 Skills Demonstrated
