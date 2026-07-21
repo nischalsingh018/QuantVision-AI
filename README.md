@@ -248,6 +248,7 @@ Run the application
 # 🌐 Live Demo
 
 Coming Soon
+ [Launch QuantVision AI](https://quantvision-bayesian-ns.streamlit.app/)
 
 ---
 
