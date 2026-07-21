@@ -229,22 +229,19 @@ Run the application
 ```
 
 ---
+## 📷 Dashboard Preview
 
-# 📷 Dashboard Preview
+### Dashboard
+![Dashboard](screenshots/dashboard.jpeg)
 
-Add screenshots after capturing your dashboard.
+### Portfolio Performance
+![Portfolio](screenshots/portfolio.jpeg)
 
-Example:
+### Trade History
+![Trade History](screenshots/trade_history.jpeg)
 
-```text
-screenshots/dashboard.png
-
-screenshots/portfolio.png
-
-screenshots/trades.png
-
-screenshots/metrics.png
-```
+### Performance Metrics
+![Performance Metrics](screenshots/metrics.jpeg)
 
 ---
 
