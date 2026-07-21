@@ -279,25 +279,22 @@ Run the application
 - Sentiment Analysis Integration
 
 ---
+## 👨‍💻 Author
 
-# 👨‍💻 Author
+**Nischal Singh**
 
-**Nischal S**
+Finance Student | AI & Machine Learning Enthusiast
 
-AI & Data Science Student
+- GitHub: https://github.com/nischalsingh018
+- LinkedIn: https://linkedin.com/in/nischal-singh-00548a38b
 
-### Areas of Interest
+## 🌟 Areas of Interest
 
 - Artificial Intelligence
 - Machine Learning
 - Quantitative Finance
-- Financial Analytics
-- Data Science
-
-GitHub:
-https://github.com/nischalsingh018
-
----
+- Financial Analysis
+- Capital Markets
 
 # 📄 License
 
