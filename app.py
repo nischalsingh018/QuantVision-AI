@@ -55,40 +55,48 @@ with st.spinner("Loading live market data..."):
 
     if len(data) < 100:
         st.warning("⚠ Limited historical data received.")
-        
+
     # Technical Indicators
-    data = calculate_indicators(data)
+data = calculate_indicators(data)
+st.success(f"✅ After indicators: {len(data)} rows")
 
-    # Remove rolling NaN rows
-    data = data.dropna().copy()
+# Remove rolling NaN rows
+data = data.dropna().copy()
+st.success(f"✅ After dropna: {len(data)} rows")
 
-    # -----------------------------
-    # AI Pipeline
-    # -----------------------------
+# AI Pipeline
+data = detect_market_regime(data)
+st.success("✅ Regime detection completed")
 
-    data = detect_market_regime(data)
+var_forecast = run_var_model(data)
+st.success("✅ VAR model completed")
 
-    var_forecast = run_var_model(data)
+data = bayesian_lstm_prediction(data)
+st.success("✅ Bayesian model completed")
 
-    data = bayesian_lstm_prediction(data)
+data = foundation_forecast(data)
+st.success("✅ Foundation model completed")
 
-    data = foundation_forecast(data)
+data = bayesian_update(data)
+st.success("✅ Bayesian update completed")
 
-    data = bayesian_update(data)
+data = particle_filter(data)
+st.success("✅ Particle filter completed")
 
-    data = particle_filter(data)
+data = conformal_prediction(data)
+st.success("✅ Conformal prediction completed")
 
-    data = conformal_prediction(data)
+data = ensemble_prediction(data)
+st.success("✅ Ensemble completed")
 
-    data = ensemble_prediction(data)
+data = allocation_guidance(data)
+st.success("✅ Allocation completed")
 
-    data = allocation_guidance(data)
+data = generate_recommendation(data)
+st.success("✅ Recommendation completed")
 
-    data = generate_recommendation(data)
-
-    # Portfolio Backtest
-    data, portfolio_summary = simulate_portfolio(data)
-
+data, portfolio_summary = simulate_portfolio(data)
+st.success("✅ Portfolio simulation completed")
 # Latest Market Row
 latest = data.iloc[-1]
 previous = data.iloc[-2]
