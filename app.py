@@ -46,8 +46,6 @@ with st.spinner("Loading live market data..."):
 
     data = load_market_data("^NSEI")
 
-    st.write("Rows Downloaded:", len(data))
-    st.write("Columns:", list(data.columns))
 
     if data.empty:
         st.error("❌ Yahoo Finance returned no data.")
@@ -58,45 +56,44 @@ with st.spinner("Loading live market data..."):
 
     # Technical Indicators
 data = calculate_indicators(data)
-st.success(f"✅ After indicators: {len(data)} rows")
+
 
 # Remove rolling NaN rows
 data = data.dropna().copy()
-st.success(f"✅ After dropna: {len(data)} rows")
+)
 
 # AI Pipeline
 data = detect_market_regime(data)
-st.success("✅ Regime detection completed")
+
 
 var_forecast = run_var_model(data)
-st.success("✅ VAR model completed")
 
 data = bayesian_lstm_prediction(data)
-st.success("✅ Bayesian model completed")
+
 
 data = foundation_forecast(data)
-st.success("✅ Foundation model completed")
+
 
 data = bayesian_update(data)
-st.success("✅ Bayesian update completed")
+
 
 data = particle_filter(data)
-st.success("✅ Particle filter completed")
+
 
 data = conformal_prediction(data)
-st.success("✅ Conformal prediction completed")
+
 
 data = ensemble_prediction(data)
-st.success("✅ Ensemble completed")
+
 
 data = allocation_guidance(data)
-st.success("✅ Allocation completed")
+
 
 data = generate_recommendation(data)
-st.success("✅ Recommendation completed")
+
 
 data, portfolio_summary = simulate_portfolio(data)
-st.success("✅ Portfolio simulation completed")
+
 # Latest Market Row
 latest = data.iloc[-1]
 previous = data.iloc[-2]
