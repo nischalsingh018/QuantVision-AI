@@ -12,6 +12,7 @@ from conformal import conformal_prediction
 from ensemble import ensemble_prediction
 from allocation import allocation_guidance
 from report_generator import generate_pdf
+from var_model import run_var_model
 
 from charts import (
     price_chart,
@@ -49,12 +50,17 @@ with st.spinner("Loading live market data..."):
 
     # Technical Indicators
     data = calculate_indicators(data)
+   
 
     # Remove rows with NaN values created by rolling indicators
     data = data.dropna().copy()
 
     # AI Pipeline
     data = detect_market_regime(data)
+
+    # New Location
+    var_forecast = run_var_model(data)
+    
     data = bayesian_update(data)
     data = particle_filter(data)
     data = conformal_prediction(data)
@@ -151,6 +157,13 @@ with h2:
 
 with h3:
     st.metric("Risk", risk)
+
+    st.subheader("📈 VAR Forecast")
+
+if var_forecast is not None:
+    st.dataframe(var_forecast)
+else:
+    st.info("Not enough historical data to generate a VAR forecast.")
 
 st.markdown("---")
 
