@@ -23,86 +23,83 @@ def generate_recommendation(data):
             uncertainty = 1.0
 
         # -----------------------------
-        # Strong Bull
+        # Risk-On
         # -----------------------------
-        if regime == "Strong Bull":
+        if regime == "Risk-On":
 
             if confidence > 0.85:
-
                 rec = "STRONG BUY"
                 reason = "Very high bullish probability with strong confidence."
-
             else:
-
                 rec = "BUY"
-                reason = "Bullish regime detected."
+                reason = "Bullish market regime."
 
         # -----------------------------
-        # Bull
+        # Late-Cycle
         # -----------------------------
-        elif regime == "Bull":
+        elif regime == "Late-Cycle":
 
             rec = "BUY"
             reason = "Positive market trend."
 
         # -----------------------------
-        # Neutral
+        # Transitional
         # -----------------------------
-        elif regime == "Neutral":
+        elif regime == "Transitional":
 
             rec = "HOLD"
             reason = "Market is uncertain."
 
         # -----------------------------
-        # Bear
+        # Post-Shock
         # -----------------------------
-        elif regime == "Bear":
+        elif regime == "Post-Shock":
 
             rec = "SELL"
-            reason = "Bearish trend detected."
+            reason = "Weak market conditions."
 
         # -----------------------------
-        # Strong Bear
+        # Risk-Off
+        # -----------------------------
+        elif regime == "Risk-Off":
+
+            if confidence > 0.85:
+                rec = "STRONG SELL"
+                reason = "Very high probability of continued weakness."
+            else:
+                rec = "SELL"
+                reason = "Bearish market regime."
+
+        # -----------------------------
+        # Fallback
         # -----------------------------
         else:
 
-            if confidence > 0.85:
-
-                rec = "STRONG SELL"
-                reason = "Very high probability of continued weakness."
-
-            else:
-
-                rec = "SELL"
-                reason = "Bearish conditions."
+            rec = "HOLD"
+            reason = "Unknown market regime."
 
         # -----------------------------
         # High uncertainty adjustment
         # -----------------------------
         if uncertainty > 0.40:
-
             reason += " High uncertainty—trade cautiously."
 
         recommendations.append(rec)
         reasons.append(reason)
 
-    import numpy as np  # Add this at the top of recommendation.py if it's not already there
-
     data["Recommendation"] = recommendations
     data["Reason"] = reasons
 
-     # Buy markers
     data["Buy_Signal"] = np.where(
-    data["Recommendation"].isin(["BUY", "STRONG BUY"]),
-    data["Close"],
-    np.nan,
-)
+        data["Recommendation"].isin(["BUY", "STRONG BUY"]),
+        data["Close"],
+        np.nan,
+    )
 
-     # Sell markers
     data["Sell_Signal"] = np.where(
-    data["Recommendation"].isin(["SELL", "STRONG SELL"]),
-    data["Close"],
-    np.nan,
-)
+        data["Recommendation"].isin(["SELL", "STRONG SELL"]),
+        data["Close"],
+        np.nan,
+    )
 
     return data

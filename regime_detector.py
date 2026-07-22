@@ -49,13 +49,11 @@ def detect_market_regime(data):
 
     result.loc[valid_index, "State"] = hidden_states
 
-    # Raw confidence
+    # Confidence
     raw_confidence = probabilities.max(axis=1)
 
-    # Smooth confidence
     smoothed_confidence = 0.60 + (raw_confidence * 0.35)
 
-    # Limit between 60% and 95%
     smoothed_confidence = np.clip(
         smoothed_confidence,
         0.60,
@@ -67,7 +65,9 @@ def detect_market_regime(data):
         "Confidence"
     ] = smoothed_confidence
 
-    # Save state probabilities
+    # -----------------------------
+    # Store State Probabilities
+    # -----------------------------
     for i in range(5):
         result.loc[
             valid_index,
@@ -75,7 +75,7 @@ def detect_market_regime(data):
         ] = probabilities[:, i]
 
     # -----------------------------
-    # Determine Market Regimes
+    # Determine Regime Labels
     # -----------------------------
     state_returns = {}
 
@@ -86,19 +86,25 @@ def detect_market_regime(data):
         if idx.sum() == 0:
             state_returns[state] = -999
         else:
-            state_returns[state] = features.loc[idx, "Daily Return"].mean()
+            state_returns[state] = features.loc[
+                idx,
+                "Daily Return"
+            ].mean()
 
     ordered = sorted(
         state_returns,
         key=state_returns.get
     )
 
+    # ------------------------------------------------
+    # Internship Specification Labels
+    # ------------------------------------------------
     mapping = {
-        ordered[0]: "Strong Bear",
-        ordered[1]: "Bear",
-        ordered[2]: "Neutral",
-        ordered[3]: "Bull",
-        ordered[4]: "Strong Bull",
+        ordered[0]: "Risk-Off",
+        ordered[1]: "Post-Shock",
+        ordered[2]: "Transitional",
+        ordered[3]: "Late-Cycle",
+        ordered[4]: "Risk-On",
     }
 
     result["Regime"] = result["State"].map(mapping)
