@@ -1,17 +1,21 @@
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Dropout
+from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 
 
 def bayesian_lstm_prediction(data):
-
     """
-    Bayesian Deep Learning Module
-    Uses Monte Carlo Dropout for uncertainty estimation.
+    Bayesian Deep Learning Approximation
+    -----------------------------------
+    Uses an ensemble of neural networks to estimate
+    prediction uncertainty.
+
+    Returns:
+        DataFrame with:
+            DL Prediction
+            DL Uncertainty
     """
 
     df = data.copy()
@@ -24,48 +28,41 @@ def bayesian_lstm_prediction(data):
 
     df = df.dropna()
 
-    X = df[features].values
+    if len(df) < 30:
+        return df
 
+    X = df[features].values
     y = df["Daily Return"].shift(-1)
 
     X = X[:-1]
     y = y[:-1]
 
     scaler = StandardScaler()
-
     X = scaler.fit_transform(X)
-
-    model = Sequential([
-        Dense(64, activation="relu"),
-        Dropout(0.30),
-        Dense(32, activation="relu"),
-        Dropout(0.30),
-        Dense(1)
-    ])
-
-    model.compile(
-        optimizer="adam",
-        loss="mse"
-    )
-
-    model.fit(
-        X,
-        y,
-        epochs=20,
-        verbose=0
-    )
 
     latest = X[-1].reshape(1, -1)
 
     predictions = []
 
-    # Monte Carlo Dropout
-    for _ in range(100):
-        pred = model(latest, training=True)
-        predictions.append(pred.numpy()[0][0])
+    # Train multiple models with different random seeds
+    # to estimate prediction uncertainty.
+    for seed in range(30):
 
-    mean_prediction = np.mean(predictions)
-    uncertainty = np.std(predictions)
+        model = MLPRegressor(
+            hidden_layer_sizes=(64, 32),
+            activation="relu",
+            solver="adam",
+            max_iter=500,
+            random_state=seed
+        )
+
+        model.fit(X, y)
+
+        pred = model.predict(latest)[0]
+        predictions.append(pred)
+
+    mean_prediction = float(np.mean(predictions))
+    uncertainty = float(np.std(predictions))
 
     df.loc[df.index[-1], "DL Prediction"] = mean_prediction
     df.loc[df.index[-1], "DL Uncertainty"] = uncertainty
