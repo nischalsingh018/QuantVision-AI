@@ -746,10 +746,12 @@ The project showcases how Bayesian inference, Hidden Markov Models, ensemble lea
 ---
 
 ## 🚀 Live Application
+## 🌐 Live Demo
 
 **Streamlit App**
 
-https://quantvision-bayesian-ns.streamlit.app/
+
+https://quantvision-ai-v2-ns.streamlit.app/
 
 ---
 
