@@ -1,21 +1,39 @@
 import yfinance as yf
 import pandas as pd
 
+
 def load_market_data(symbol="^NSEI", period="1y"):
     """
-    Downloads historical market data using Yahoo Finance.
+    Download market data with retry mechanism.
     """
 
-    data = yf.download(
+    tickers = [
         symbol,
-        period=period,
-        interval="1d",
-        auto_adjust=False,
-        progress=False
-    )
+        "^NSEI",
+        "NIFTYBEES.NS",
+        "RELIANCE.NS"
+    ]
 
-    # Flatten MultiIndex columns if they exist
-    if isinstance(data.columns, pd.MultiIndex):
-        data.columns = data.columns.get_level_values(0)
+    for ticker in tickers:
 
-    return data
+        try:
+
+            data = yf.download(
+                ticker,
+                period=period,
+                interval="1d",
+                auto_adjust=False,
+                progress=False,
+                threads=False
+            )
+
+            if isinstance(data.columns, pd.MultiIndex):
+                data.columns = data.columns.get_level_values(0)
+
+            if not data.empty and len(data) > 100:
+                return data
+
+        except Exception:
+            continue
+
+    return pd.DataFrame()

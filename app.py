@@ -46,10 +46,16 @@ with st.spinner("Loading live market data..."):
 
     data = load_market_data("^NSEI")
 
-    if data is None or len(data) < 100:
-        st.error("Unable to download sufficient market data.")
+    st.write("Rows Downloaded:", len(data))
+    st.write("Columns:", list(data.columns))
+
+    if data.empty:
+        st.error("❌ Yahoo Finance returned no data.")
         st.stop()
 
+    if len(data) < 100:
+        st.warning("⚠ Limited historical data received.")
+        
     # Technical Indicators
     data = calculate_indicators(data)
 
