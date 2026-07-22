@@ -4,7 +4,7 @@
 [![Streamlit](https://img.shields.io/badge/Built%20With-Streamlit-red)](https://streamlit.io/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Completed-success)]()
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://quantvision-bayesian-ns.streamlit.app/)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://quantvision-ai-v2-ns.streamlit.app/)
 
 # Bayesian Regime Detection Engine for Indian Equity Markets
 
